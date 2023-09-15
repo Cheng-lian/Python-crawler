@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>搜索引擎</title>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .header span {
+            margin-right: 10px;
+            padding: 5px;
+
+        }
+
+        .header .luogu {
+            background-color: rgb(52, 152, 219);
+        }
+
+        .header .theme {
+            background-color: lightblue;
+        }
+
+        .filter-section {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .filter-section label {
+            margin-right: 10px;
+        }
+
+        .selected-filters {
+            margin-top: 10px;
+        }
+
+        .color {
+            color: #C0C0C0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <span><label for="filter-select">所属题库</label></span>
+            <span class="luogu">洛谷</span>
+            <span class="theme">主题库</span>
+            <span class="theme">入门与面试</span>
+            <span>CodeForces</span>
+            <span>SPOJ</span>
+            <span>AtCoder</span>
+            <span>UVA</span>
+        </div>
+
+        <div class="filter-section">
+            <label for="filter-select">筛选条件：</label>
+            <span>
+                <select id="filter-select">
+                    <option value="difficulty">题目难度
+                    </option>
+                    <option>入门</option>
+                    <option>普及-</option>
+                    <option>普及/提高-</option>
+                    <option>普及+/提高</option>
+                    <option>提高+/省选-</option>
+                    <option>NOI/NOI+/CTSC</option>
+            </span>
+            <!-- 其他筛选条件选项 -->
+            </select>
+            <span>
+                <input type="text" id="keyword-input" placeholder="算法/来源/标题/题目编号">
+            </span>
+            <span><label for="keyword-input">关键词</label></span>
+            <span><input type="text" id="keyword-input" placeholder="算法/来源/标题/题目编号"></span>
+            <input type="button" value="搜索">
+            <input type="checkbox" id="content-search">
+            <span>
+                <label for="content-search">搜索题目内容</label>
+            </span>
+        </div>
+
+        <div class="selected-filters">
+            已选择：
+            <span id="selected-filters-text">
+                <font class="color">暂无，可在上方进行多维度筛选，例如：普及-（难度）、CSP-J（来源）、2020（时间）、动态规划（算法）</font>
+            </span>
+
+        </div>
+    </div>
+
+    <script>
+        const filterSelect = document.getElementById('filter-select');
+        const keywordInput = document.getElementById('keyword-input');
+        const contentSearch = document.getElementById('content-search');
+        const selectedFiltersText = document.getElementById('selected-filters-text');
+
+        filterSelect.addEventListener('change', updateSelectedFilters);
+        keywordInput.addEventListener('input', updateSelectedFilters);
+        contentSearch.addEventListener('change', updateSelectedFilters);
+
+        function updateSelectedFilters() {
+            const filter = filterSelect.value;
+            const keyword = keywordInput.value;
+            const searchContent = contentSearch.checked;
+
+            let selectedFilters = [];
+
+            if (filter) {
+                selectedFilters.push(`筛选条件：${filter}`);
+            }
+
+            if (keyword) {
+                selectedFilters.push(`关键字：${keyword}`);
+            }
+
+            if (searchContent) {
+                selectedFilters.push('搜索题目内容');
+            }
+
+            selectedFiltersText.textContent = selectedFilters.length > 0 ? selectedFilters.join(', ') : '暂无，可在上方进行多维度筛选，例如：普及-（难度）、CSP-J（来源）、2020（时间）、动态规划（算法）';
+        }
+    </script>
+</body>
+
+</html>
